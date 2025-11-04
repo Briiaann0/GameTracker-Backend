@@ -24,9 +24,18 @@ exports.crearJuego = async (req, res) => {
 
 
 exports.obtenerJuegos = async (req, res) => {
-   
-     res.json({ msg: 'Obteniendo todos los juegos' });
-   };
+    try {
+       
+ const juegos = await Juego.find();
+
+        res.status(200).json(juegos);
+        
+    } catch (error) 
+    {
+        console.error(error);
+        res.status(500).send('Hubo un error al obtener los juego');
+    }
+};
 
 
  exports.actualizarJuego = async (req, res) => {
