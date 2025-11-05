@@ -35,8 +35,23 @@ exports.obtenerJuegos = async (req, res) => {
 
 
  exports.actualizarJuego = async (req, res) => {
-   
-      res.json({ msg: 'Actualizando juego' });
+    try {
+        const juego = await Juego.findByIdAndUpdate(
+            req.params.id, 
+            req.body, 
+            { new: true, runValidators: true } 
+        );
+        if (!juego) {
+            return res.status(404).json({ msg: 'Juego no encontrado' });
+        }
+        res.status(200).json(juego);
+        
+    } catch (error) {
+
+        console.error(error);
+        
+        res.status(400).send ('Hubo un error al actualizar el juego');
+    }
 };
 
 
